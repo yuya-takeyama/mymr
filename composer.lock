@@ -1,0 +1,9 @@
+{
+    "hash": "d12e2bde5e46da2f005b590fee5ef708",
+    "packages": [
+        {
+            "package": "symfony\/console",
+            "version": "v2.0.9"
+        }
+    ]
+}
