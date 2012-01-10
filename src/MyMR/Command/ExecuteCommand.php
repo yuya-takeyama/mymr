@@ -35,8 +35,11 @@ class ExecuteCommand extends Command
     {
         $inputTable = $this->_createInputTable($input->getOption('input'));
         list($outputTable, $tmpTable) = $this->_createOutputTables($input->getOption('output'));
-        require_once $input->getArgument('file');
-        $procedure = new \WordCount;
+        $file = $input->getArgument('file');
+        require_once $file;
+        preg_match('#([^/]+)\.php$#', $file, $matches);
+        $klass = "\\{$matches[1]}";
+        $procedure = new $klass;
         $procedure->execute($inputTable, $outputTable, $tmpTable);
     }
 
