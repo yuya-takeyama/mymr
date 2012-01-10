@@ -6,11 +6,16 @@
  */
 namespace MyMR\Command;
 
+use \MyMR\Util,
+    \MyMR\Table;
+
 use \Symfony\Component\Console\Command\Command,
     \Symfony\Component\Console\Input\InputInterface,
     \Symfony\Component\Console\Input\InputArgument,
     \Symfony\Component\Console\Input\InputOption,
     \Symfony\Component\Console\Output\OutputInterface;
+
+use PDO;
 
 class ExecuteCommand extends Command
 {
@@ -28,5 +33,32 @@ class ExecuteCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        $inputTable = $this->_createInputTable($input->getOption('input'));
+        list($outputTable, $tmpTable) = $this->_createOutputTables($input->getOption('output'));
+    }
+
+    protected function _createInputTable($uri)
+    {
+        $params = Util::parseDatabaseUri($uri);
+        return new Table($params['table'], $this->_createPdo($params));
+    }
+
+    protected function _createOutputTables($uri)
+    {
+        $params = Util::parseDatabaseUri($uri);
+        $pdo = $this->_createPdo($params);
+        return array(
+            new Table($params['table'], $pdo),
+            new Table('job', $pdo)
+        );
+    }
+
+    protected function _createPdo($params)
+    {
+    
+        $dsn = "mysql:dbname={$params['database']};" .
+            "host={$params['host']};" .
+            "port={$params['port']}";
+        return new PDO($dsn, $params['user'], $params['pass']);
     }
 }
