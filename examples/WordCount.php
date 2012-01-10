@@ -8,7 +8,7 @@ use \MyMR\Base;
 
 class WordCount extends Base
 {
-    public function map($key, $value)
+    public function map($value)
     {
         $words = preg_split('/\s+/u', $value['text']);
         foreach ($words as $word) {

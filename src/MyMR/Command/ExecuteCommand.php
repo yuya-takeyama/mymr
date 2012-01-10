@@ -35,6 +35,9 @@ class ExecuteCommand extends Command
     {
         $inputTable = $this->_createInputTable($input->getOption('input'));
         list($outputTable, $tmpTable) = $this->_createOutputTables($input->getOption('output'));
+        require_once $input->getArgument('file');
+        $procedure = new \WordCount;
+        $procedure->execute($inputTable, $outputTable, $tmpTable);
     }
 
     protected function _createInputTable($uri)
@@ -59,6 +62,8 @@ class ExecuteCommand extends Command
         $dsn = "mysql:dbname={$params['database']};" .
             "host={$params['host']};" .
             "port={$params['port']}";
-        return new PDO($dsn, $params['user'], $params['pass']);
+        return new PDO($dsn, $params['user'], $params['pass'], array(
+            PDO::ATTR_EMULATE_PREPARES => false,
+        ));
     }
 }
