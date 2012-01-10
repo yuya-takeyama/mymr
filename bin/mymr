@@ -1,0 +1,30 @@
+#!/usr/bin/env php
+<?php
+/**
+ * MyMR.
+ *
+ * A Framework to write Map/Reduce procedures using PHP and MySQL.
+ *
+ * @author Yuya Takeyama
+ */
+require_once __DIR__ . '/../vendor/.composer/autoload.php';
+
+use \Symfony\Component\Console\Application;
+use \Symfony\Component\Console\Input\InputInterface;
+use \Symfony\Component\Console\Input\InputArgument;
+use \Symfony\Component\Console\Input\InputOption;
+use \Symfony\Component\Console\Output\OutputInterface;
+
+$console = new Application('MyMR');
+$console
+    ->register('execute')
+    ->setDefinition(array(
+        new InputArgument('file', InputArgument::REQUIRED, 'File defined Map/Reduce definition'),
+    ))
+    ->setDescription('Executs Map/Reduce procedure')
+    ->setCode(function (InputInterface $input, OutputInterface $output) {
+    })
+    ->addOption('input', 'i', InputOption::VALUE_REQUIRED, 'URI of input table')
+    ->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'URI of output table');
+
+$console->run();
