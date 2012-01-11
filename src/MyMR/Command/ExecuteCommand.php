@@ -31,6 +31,13 @@ class ExecuteCommand extends Command
             ->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'URI of output table');
     }
 
+    /**
+     * Main procedure.
+     *
+     * @param  InputInterface   $input
+     * @param  OutputInterface $output
+     * @return void
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $inputTable = $this->_createInputTable($input->getOption('input'));
@@ -43,12 +50,24 @@ class ExecuteCommand extends Command
         $procedure->execute($inputTable, $outputTable, $tmpTable);
     }
 
+    /**
+     * Constructs input Table object.
+     *
+     * @param  string $uri
+     * @return Table
+     */
     protected function _createInputTable($uri)
     {
         $params = Util::parseDatabaseUri($uri);
         return new Table($params['table'], $this->_createPdo($params));
     }
 
+    /**
+     * Constructs output Table and tmp Table objects.
+     *
+     * @param  string $uri
+     * @return array
+     */
     protected function _createOutputTables($uri)
     {
         $params = Util::parseDatabaseUri($uri);
@@ -59,6 +78,12 @@ class ExecuteCommand extends Command
         );
     }
 
+    /**
+     * Constructs PDO object.
+     *
+     * @param  array $params
+     * @return PDO
+     */
     protected function _createPdo($params)
     {
     
