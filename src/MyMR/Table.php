@@ -10,40 +10,51 @@ use \PDO;
 
 class Table
 {
-    protected $_tableName;
-    protected $_pdo;
+    protected $_database;
+    protected $_name;
 
-    public function __construct($tableName, PDO $pdo)
+    public function __construct($database, $name)
     {
-        $this->_tableName = $tableName;
-        $this->_pdo = $pdo;
+        $this->_database = $database;
+        $this->_name = $name;
     }
 
     public function fetchAll()
     {
-        $stmt = $this->_pdo->query("SELECT * FROM `{$this->_tableName}`");
+        $stmt = $this->_database->query("SELECT * FROM `{$this->_name}`");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public  function fetchAllGroup()
     {
         $sql = "SELECT `key`, GROUP_CONCAT(`value` SEPARATOR '\\n') AS `values` " .
-            "FROM `{$this->_tableName}` " .
+            "FROM `{$this->_name}` " .
             "GROUP BY `key`";
-        $stmt = $this->_pdo->query($sql);
+        $stmt = $this->_database->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function truncate()
     {
-        return $this->_pdo->exec("TRUNCATE TABLE `{$this->_tableName}`");
+        return $this->_database->exec("TRUNCATE TABLE `{$this->_name}`");
     }
 
     public function insert($record)
     {
-        $sql = "INSERT INTO `{$this->_tableName}` " .
-            "(`key`, `value`) VALUES (?, ?)";
-        $stmt = $this->_pdo->prepare($sql);
-        $stmt->execute(array($record['key'], $record['value']));
+        $cols = $values = array();
+        $valueCount = 0;
+        foreach ($record as $key => $value) {
+            $cols[] = $key;
+            $values[] = $value;
+            $valueCount++;
+        }
+        $colsSpec = join(', ', array_map(function ($col) {
+            return "`{$col}`";
+        }, $cols));
+        $placeHolder = join(', ', array_fill(0, $valueCount, '?'));
+        $sql = "INSERT INTO `{$this->_name}` " .
+            "({$colsSpec}) VALUES ({$placeHolder})";
+        $stmt = $this->_database->prepare($sql);
+        $stmt->execute($values);
     }
 }

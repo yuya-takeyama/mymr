@@ -7,6 +7,7 @@
 namespace MyMR\Command;
 
 use \MyMR\Util,
+    \MyMR\Database,
     \MyMR\Table;
 
 use \Symfony\Component\Console\Command\Command,
@@ -59,7 +60,8 @@ class ExecuteCommand extends Command
     protected function _createInputTable($uri)
     {
         $params = Util::parseDatabaseUri($uri);
-        return new Table($params['table'], $this->_createPdo($params));
+        $database = $this->_createDatabase($params);
+        return $database->getTable($params['table']);
     }
 
     /**
@@ -71,27 +73,27 @@ class ExecuteCommand extends Command
     protected function _createOutputTables($uri)
     {
         $params = Util::parseDatabaseUri($uri);
-        $pdo = $this->_createPdo($params);
+        $database = $this->_createDatabase($params);
+        $tmpTableName = "_tmp_mymr_" . date("YmdHis") . "_" . uniqid();
+        $database->createTmpTable($tmpTableName);
         return array(
-            new Table($params['table'], $pdo),
-            new Table('job', $pdo)
+            $database->getTable($params['table']),
+            $database->getTable($tmpTableName)
         );
     }
 
     /**
-     * Constructs PDO object.
+     * Constructs Database object.
      *
      * @param  array $params
      * @return PDO
      */
-    protected function _createPdo($params)
+    protected function _createDatabase($params)
     {
     
         $dsn = "mysql:dbname={$params['database']};" .
             "host={$params['host']};" .
             "port={$params['port']}";
-        return new PDO($dsn, $params['user'], $params['pass'], array(
-            PDO::ATTR_EMULATE_PREPARES => false,
-        ));
+        return new Database(new PDO($dsn, $params['user'], $params['pass']));
     }
 }

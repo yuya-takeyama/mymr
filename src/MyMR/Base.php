@@ -31,9 +31,9 @@ abstract class Base
                 return json_decode($json, true);
             }, explode("\n", $record['values']));
             $result = $this->reduce($record['key'], $values);
-            $this->_outputTable->insert(array(
-                'key'   => $record['key'],
-                'value' => \json_encode($result),
+            $this->_outputTable->insert(array_merge(
+                array('key' => $record['key']),
+                $result
             ));
         }
     }
