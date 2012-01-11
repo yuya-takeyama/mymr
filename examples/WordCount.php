@@ -8,9 +8,9 @@ use \MyMR\Base;
 
 class WordCount extends Base
 {
-    public function map($value)
+    public function map($record)
     {
-        $words = preg_split('/\s+/u', $value['text']);
+        $words = preg_split('/\s+/u', $record['text']);
         foreach ($words as $word) {
             $this->emit($word, array('count' => 1));
         }
