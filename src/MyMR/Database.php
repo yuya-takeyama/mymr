@@ -45,7 +45,7 @@ class Database
      */
     public function createTmpTable($tableName)
     {
-        $sql = "CREATE TABLE `{$tableName}` ( " .
+        $sql = "CREATE TEMPORARY TABLE `{$tableName}` ( " .
             "`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " .
             "`key` VARCHAR(64) NOT NULL, " .
             "`value` text NOT NULL " .
