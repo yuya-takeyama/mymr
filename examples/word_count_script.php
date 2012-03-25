@@ -1,6 +1,6 @@
 <?php
 /**
- * Builder interface proposal.
+ * WordCount example using Builder interface.
  *
  * @author Yuya Takeyama
  */
