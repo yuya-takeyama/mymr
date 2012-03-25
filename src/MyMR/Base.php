@@ -6,7 +6,8 @@
  */
 namespace MyMR;
 
-use \MyMR\Table;
+use \MyMR\Table,
+    \MyMR\Progress;
 
 abstract class Base
 {
@@ -14,19 +15,26 @@ abstract class Base
     protected $_outputTable;
     protected $_tmpTable;
 
-    public function execute($input, $output, $tmp)
+    public function execute($inputTable, $outputTable, $tmp, $output)
     {
-        $this->_inputTable  = $input;
-        $this->_outputTable = $output;
+        $this->_inputTable  = $inputTable;
+        $this->_outputTable = $outputTable;
         $this->_tmpTable    = $tmp;
 
+        $output->writeln('Beggining Map phase.');
         $this->_tmpTable->truncate();
-        foreach ($this->_inputTable->fetchAll() as $record) {
+        $records = $this->_inputTable->fetchAll();
+        $progress = new Progress(count($records), $output);
+        foreach ($this->_inputTable->fetchAll() as $i => $record) {
             $this->map($record);
+            $progress->setCurrentPosition($i + 1);
         }
 
+        $output->writeln('Beggining Reduce phase.');
         $this->_outputTable->truncate();
-        foreach ($this->_tmpTable->fetchAllGroup() as $record) {
+        $records = $this->_tmpTable->fetchAllGroup();
+        $progress = new Progress(count($records), $output);
+        foreach ($records as $i => $record) {
             $values = array_map(function ($json) {
                 return json_decode($json, true);
             }, explode("\n", $record['values']));
@@ -35,7 +43,9 @@ abstract class Base
                 array('key' => $record['key']),
                 $result
             ));
+            $progress->setCurrentPosition($i + 1);
         }
+        $output->writeln('Completed.');
     }
 
     public function emit($key, $value)

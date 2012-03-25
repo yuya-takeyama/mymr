@@ -48,7 +48,7 @@ class ExecuteCommand extends Command
         preg_match('#([^/]+)\.php$#', $file, $matches);
         $klass = "\\{$matches[1]}";
         $procedure = new $klass;
-        $procedure->execute($inputTable, $outputTable, $tmpTable);
+        $procedure->execute($inputTable, $outputTable, $tmpTable, $output);
     }
 
     /**
