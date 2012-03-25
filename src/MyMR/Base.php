@@ -11,6 +11,8 @@ use \MyMR\Table,
 
 abstract class Base
 {
+    const PROGRESS_DATE_FORMAT = '[Y-m-d H:i:s]';
+
     protected $_inputTable;
     protected $_outputTable;
     protected $_tmpTable;
@@ -24,7 +26,7 @@ abstract class Base
         $output->writeln('Beggining Map phase.');
         $this->_tmpTable->truncate();
         $records = $this->_inputTable->fetchAll();
-        $progress = new Progress(count($records), $output);
+        $progress = new Progress(count($records), $output, self::PROGRESS_DATE_FORMAT);
         foreach ($this->_inputTable->fetchAll() as $i => $record) {
             $this->map($record);
             $progress->setCurrentPosition($i + 1);
@@ -33,7 +35,7 @@ abstract class Base
         $output->writeln('Beggining Reduce phase.');
         $this->_outputTable->truncate();
         $records = $this->_tmpTable->fetchAllGroup();
-        $progress = new Progress(count($records), $output);
+        $progress = new Progress(count($records), $output, self::PROGRESS_DATE_FORMAT);
         foreach ($records as $i => $record) {
             $values = array_map(function ($json) {
                 return json_decode($json, true);
