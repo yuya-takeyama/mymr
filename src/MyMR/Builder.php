@@ -27,9 +27,8 @@ class Builder
         $params = Util::parseDatabaseUri($uri);
         $database = $this->_createDatabase($params);
         $tmpTableName = "_tmp_mymr_" . date("YmdHis") . "_" . uniqid();
-        $database->createTmpTable($tmpTableName);
         $this->outputTable = $database->getTable($params['table']);
-        $this->intermediateTable = $database->getTable($tmpTableName);
+        $this->intermediateTable = $database->getIntermediateTable($tmpTableName);
     }
 
     public function setMapper($mapper)

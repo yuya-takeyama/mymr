@@ -10,33 +10,33 @@ use \PDO;
 
 class Table
 {
-    protected $_database;
-    protected $_name;
+    protected $database;
+    protected $name;
 
     public function __construct($database, $name)
     {
-        $this->_database = $database;
-        $this->_name = $name;
+        $this->database = $database;
+        $this->name = $name;
     }
 
     public function fetchAll()
     {
-        $stmt = $this->_database->query("SELECT * FROM `{$this->_name}`");
+        $stmt = $this->database->query("SELECT * FROM `{$this->name}`");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public  function fetchAllGroup()
     {
         $sql = "SELECT `key`, GROUP_CONCAT(`value` SEPARATOR '\\n') AS `values` " .
-            "FROM `{$this->_name}` " .
+            "FROM `{$this->name}` " .
             "GROUP BY `key`";
-        $stmt = $this->_database->query($sql);
+        $stmt = $this->database->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function truncate()
     {
-        return $this->_database->exec("TRUNCATE TABLE `{$this->_name}`");
+        return $this->database->exec("TRUNCATE TABLE `{$this->name}`");
     }
 
     public function insert($record)
@@ -52,9 +52,9 @@ class Table
             return "`{$col}`";
         }, $cols));
         $placeHolder = join(', ', array_fill(0, $valueCount, '?'));
-        $sql = "INSERT INTO `{$this->_name}` " .
+        $sql = "INSERT INTO `{$this->name}` " .
             "({$colsSpec}) VALUES ({$placeHolder})";
-        $stmt = $this->_database->prepare($sql);
+        $stmt = $this->database->prepare($sql);
         $stmt->execute($values);
     }
 }

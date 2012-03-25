@@ -6,7 +6,8 @@
  */
 namespace MyMR;
 
-use \MyMR\Table;
+use \MyMR\Table,
+    \MyMR\IntermediateTable;
 
 use \PDO;
 
@@ -55,20 +56,24 @@ class Database
     }
 
     /**
-     * Creates table for mapped records.
+     * Gets IntermediateTable object.
      *
-     * @param  string $tableName
-     * @return
+     * @return Table
      */
-    public function createTmpTable($tableName)
+    public function getIntermediateTable($tableName)
+    {
+        return new IntermediateTable($this, $tableName);
+    }
+
+    public function createTemporaryTable($tableName)
     {
         $this->_connect();
         $sql = "CREATE TEMPORARY TABLE `{$tableName}` ( " .
-            "`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " .
-            "`key` VARCHAR(64) NOT NULL, " .
-            "`value` text NOT NULL " .
-            ") ENGINE=InnoDB";
-        $this->exec($sql);
+               "`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " .
+               "`key` VARCHAR(64) NOT NULL, " .
+               "`value` text NOT NULL " .
+               ") ENGINE=InnoDB";
+        $this->pdo->exec($sql);
     }
 
     public function query($sql)

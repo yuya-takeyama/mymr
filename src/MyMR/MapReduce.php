@@ -55,7 +55,7 @@ class MapReduce
 
     public function executeMapper(OutputInterface $output)
     {
-        $this->intermediateTable->truncate();
+        $this->intermediateTable->create();
 
         $records  = $this->inputTable->fetchAll();
         $progress = new Progress(count($records), $output, self::PROGRESS_DATE_FORMAT);
