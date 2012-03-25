@@ -5,6 +5,9 @@
         "symfony/console": "v2.0.9"
     },
     "autoload": {
-        "psr-0": {"MyMR": "src/"}
+        "psr-0": {
+          "MyMR": "src/",
+          "SymfonyX": "src/"
+        }
     }
 }
