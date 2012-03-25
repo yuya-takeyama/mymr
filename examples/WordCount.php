@@ -1,6 +1,6 @@
 <?php
 /**
- * WordCount example for MyMR.
+ * Class based word-count example for MyMR.
  *
  * @author Yuya Takeyama
  */

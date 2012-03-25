@@ -1,6 +1,6 @@
 <?php
 /**
- * WordCount example using Builder interface.
+ * Builder interface based word-count example for MyMR.
  *
  * @author Yuya Takeyama
  */
