@@ -40,7 +40,7 @@ class ExecuteCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $inputTable = $this->_createInputTable($input->getOption('input'));
-        $outputTable = $this->_createOutputTable($input->getOption('output'));
+        list($outputTable, $tmpTable) = $this->_createOutputTables($input->getOption('output'));
         $file = $input->getArgument('file');
         require_once $file;
         preg_match('#([^/]+)\.php$#', $file, $matches);
@@ -68,12 +68,15 @@ class ExecuteCommand extends Command
      * @param  string $uri
      * @return array
      */
-    protected function _createOutputTable($uri)
+    protected function _createOutputTables($uri)
     {
         $params = Util::parseDatabaseUri($uri);
         $database = $this->_createDatabase($params);
         $tmpTableName = "_tmp_mymr_" . date("YmdHis") . "_" . uniqid();
-        return $database->getTable($params['table']);
+        return array(
+            $database->getTable($params['table']),
+            $database->getIntermediateTable($tmpTableName)
+        );
     }
 
     /**
