@@ -24,6 +24,11 @@ class Progress
     protected $indicatorLength;
 
     /**
+     * @var
+     */
+    protected $flags;
+
+    /**
      * Constructor.
      *
      * @param  int             $max    Max count of progression.
@@ -34,6 +39,7 @@ class Progress
         $this->max = $max;
         $this->output = $output;
         $this->indicatorLength = strlen((string)$max) * 2 + 1;
+        $this->flags = array(true);
     }
 
     public function setCurrentPosition($position)
@@ -47,11 +53,12 @@ class Progress
             $indicator = str_pad("{$max}/{$max}", $this->indicatorLength, ' ', STR_PAD_LEFT);
             $this->output->writeln(sprintf('%s (100%%)', $indicator, $max));
         } else {
-            $key = floor($position / $max * 10);
-            if (empty($this->flags[$key])) {
+            $key = (int)floor($position / $max * 10);
+            if (array_key_exists($key, $this->flags) === false) {
                 $per = round($position / $max * 100);
                 $indicator = str_pad("{$position}/{$max}", $this->indicatorLength, ' ', STR_PAD_LEFT);
                 $this->output->writeln("{$indicator}  ({$per}%)");
+                $this->flags[$key] = true;
             }
         }
     }
