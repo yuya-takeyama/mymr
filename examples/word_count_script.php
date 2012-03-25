@@ -4,10 +4,7 @@
  *
  * @author Yuya Takeyama
  */
-require_once __DIR__ . '/../vendor/.composer/autoload.php';
-
-use \MyMR\Builder,
-    \MyMR\Table;
+use \MyMR\Builder;
 
 $builder = new Builder;
 
