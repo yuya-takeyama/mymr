@@ -1,7 +1,3 @@
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `mymr_wordcount_example` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
-
-USE `mymr_wordcount_example`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `texts` (
