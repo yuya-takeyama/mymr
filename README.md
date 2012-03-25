@@ -78,6 +78,22 @@ $builder->setReducer(function ($key, $values) {
 return $builder;
 ```
 
+Installation
+------------
+
+Currently MyMR can be installed from GitHub.
+
+```
+$ git clone git@github.com:yuya-takeyama/mymr.git
+$ cd mymr
+
+# Install dependencies using Composer.
+$ php composer.phar install
+
+# Display usage.
+$ ./bin/mymr
+```
+
 Running examples
 ----------------
 
