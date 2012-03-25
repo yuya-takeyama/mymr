@@ -6,7 +6,8 @@
  */
 namespace MyMR;
 
-use \MyMR\Command\ExecuteCommand;
+use \MyMR\Command\ExecuteCommand,
+    \MyMR\Command\BuilderCommand;
 
 use \Symfony\Component\Console\Application as ConsoleApplication,
     \Symfony\Component\Console\Input\InputInterface;
@@ -22,5 +23,6 @@ class Application extends ConsoleApplication
     {
         parent::__construct('MyMR', $version);
         $this->add(new ExecuteCommand);
+        $this->add(new BuilderCommand);
     }
 }

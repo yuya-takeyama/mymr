@@ -4,7 +4,7 @@
  *
  * @author Yuya Takeyama
  */
-require_once __DIR__ . '/../MyMr/Builder.php';
+require_once __DIR__ . '/../vendor/.composer/autoload.php';
 
 use \MyMR\Builder,
     \MyMR\Table;
@@ -29,4 +29,4 @@ $builder->setReducer(function ($key, $values) {
     return array('count' => $sum);
 });
 
-$builder->getMapReduce->run();
+return $builder;
