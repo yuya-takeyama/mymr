@@ -13,16 +13,16 @@ class WordCount extends Base
     {
         $words = preg_split('/\s+/u', $record['text']);
         foreach ($words as $word) {
-            $emitter->emit($word, array('count' => 1));
+            $emitter->emit($word, 1);
         }
     }
 
     public function reduce($key, $values)
     {
-        $result = array('count' => 0);
-        foreach ($values as $value) {
-            $result['count'] += $value['count'];
+        $sum = 0;
+        foreach ($values as $count) {
+            $sum += $count;
         }
-        return $result;
+        return array('count' => $sum);
     }
 }
