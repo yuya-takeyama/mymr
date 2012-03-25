@@ -44,6 +44,15 @@ class MapReduce
         $this->reducer           = $reducer;
     }
 
+    public function execute($output)
+    {
+        $output->writeln('Beggining Map phase.');
+        $this->executeMapper($output);
+        $output->writeln('Beggining Reduce phase.');
+        $this->executeReducer($output);
+        $output->writeln('Completed.');
+    }
+
     public function executeMapper(OutputInterface $output)
     {
         $this->intermediateTable->truncate();

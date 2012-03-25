@@ -4,15 +4,16 @@
  *
  * @author Yuya Takeyama
  */
-use \MyMR\Base;
+use \MyMR\Base,
+    \MyMR\Emitter;
 
 class WordCount extends Base
 {
-    public function map($record)
+    public function map($record, Emitter $emitter)
     {
         $words = preg_split('/\s+/u', $record['text']);
         foreach ($words as $word) {
-            $this->emit($word, array('count' => 1));
+            $emitter->emit($word, array('count' => 1));
         }
     }
 

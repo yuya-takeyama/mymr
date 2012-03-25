@@ -32,11 +32,6 @@ class BuilderCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $builder = require $input->getArgument('file');
-        $mapreduce = $builder->getMapReduce();
-        $output->writeln('Beggining Map phase.');
-        $mapreduce->executeMapper($output);
-        $output->writeln('Beggining Reduce phase.');
-        $mapreduce->executeReducer($output);
-        $output->writeln('Completed.');
+        $builder->getMapReduce()->execute($output);
     }
 }
