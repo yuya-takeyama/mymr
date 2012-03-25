@@ -48,6 +48,15 @@ class ProgressTest extends \PHPUnit_Framework_Testcase
             "10/10 (100%)" . PHP_EOL
         );
 
+        $data[] = array(
+            3,
+            range(1, 3),
+            "0/3   (0%)" . PHP_EOL .
+            "1/3  (33%)" . PHP_EOL .
+            "2/3  (67%)" . PHP_EOL .
+            "3/3 (100%)" . PHP_EOL
+        );
+
         return $data;
     }
 }
