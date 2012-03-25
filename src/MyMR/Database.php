@@ -13,18 +13,35 @@ use \PDO;
 class Database
 {
     /**
+     * @var string
+     */
+    private $dsn;
+
+    /**
+     * @var string
+     */
+    private $user;
+
+    /**
+     * @var string
+     */
+    private $password;
+
+    /**
      * @var PDO
      */
-    protected $_pdo;
+    private $pdo;
 
     /**
      * Constructor.
      *
      * @param PDO $pdo
      */
-    public function __construct(PDO $pdo)
+    public function __construct($dsn, $user, $password)
     {
-        $this->_pdo = $pdo;
+        $this->dsn      = $dsn;
+        $this->user     = $user;
+        $this->password = $password;
     }
 
     /**
@@ -45,6 +62,7 @@ class Database
      */
     public function createTmpTable($tableName)
     {
+        $this->_connect();
         $sql = "CREATE TEMPORARY TABLE `{$tableName}` ( " .
             "`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " .
             "`key` VARCHAR(64) NOT NULL, " .
@@ -55,16 +73,29 @@ class Database
 
     public function query($sql)
     {
-        return $this->_pdo->query($sql);
+        $this->_connect();
+        return $this->pdo->query($sql);
     }
 
     public function prepare($sql)
     {
-        return $this->_pdo->prepare($sql);
+        $this->_connect();
+        return $this->pdo->prepare($sql);
     }
 
     public function exec($sql)
     {
-        return $this->_pdo->exec($sql);
+        $this->_connect();
+        return $this->pdo->exec($sql);
+    }
+
+    /**
+     * Lazy connection.
+     */
+    private function _connect()
+    {
+        if (empty($this->pdo)) {
+            $this->pdo = new PDO($this->dsn, $this->user, $this->password);
+        }
     }
 }

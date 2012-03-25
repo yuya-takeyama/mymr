@@ -16,8 +16,6 @@ use \Symfony\Component\Console\Command\Command,
     \Symfony\Component\Console\Input\InputOption,
     \Symfony\Component\Console\Output\OutputInterface;
 
-use PDO;
-
 class ExecuteCommand extends Command
 {
     public function configure()
@@ -86,7 +84,7 @@ class ExecuteCommand extends Command
      * Constructs Database object.
      *
      * @param  array $params
-     * @return PDO
+     * @return \MyMR\Database
      */
     protected function _createDatabase($params)
     {
@@ -94,6 +92,6 @@ class ExecuteCommand extends Command
         $dsn = "mysql:dbname={$params['database']};" .
             "host={$params['host']};" .
             "port={$params['port']}";
-        return new Database(new PDO($dsn, $params['user'], $params['pass']));
+        return new Database($dsn, $params['user'], $params['pass']);
     }
 }

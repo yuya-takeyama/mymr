@@ -3,8 +3,6 @@ namespace MyMR;
 
 use \MyMR\MapReduce;
 
-use PDO;
-
 class Builder
 {
     private $inputTable;
@@ -59,13 +57,13 @@ class Builder
      * Constructs Database object.
      *
      * @param  array $params
-     * @return PDO
+     * @return Database
      */
     protected function _createDatabase($params)
     {
         $dsn = "mysql:dbname={$params['database']};" .
                "host={$params['host']};" .
                "port={$params['port']}";
-        return new Database(new PDO($dsn, $params['user'], $params['pass']));
+        return new Database($dsn, $params['user'], $params['pass']);
     }
 }

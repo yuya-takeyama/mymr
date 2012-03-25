@@ -15,8 +15,6 @@ use \Symfony\Component\Console\Command\Command,
     \Symfony\Component\Console\Input\InputOption,
     \Symfony\Component\Console\Output\OutputInterface;
 
-use PDO;
-
 class BuilderCommand extends Command
 {
     public function configure()
