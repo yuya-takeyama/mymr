@@ -16,7 +16,7 @@ $builder->setOutputTable('root@localhost/mymr_wordcount_example/word_counts');
 
 $builder->setMapper(function ($record, $emitter) {
     $words = preg_split('/\s+/u', $record['text']);
-    foreach ($words as $record) {
+    foreach ($words as $word) {
         $emitter->emit($word, 1);
     }
 });
