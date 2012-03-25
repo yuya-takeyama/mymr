@@ -1,6 +1,6 @@
 <?php
 /**
- * builder command for MyMR.
+ * Command for builder script based MapReduce definition.
  *
  * @author Yuya Takeyama
  */
@@ -21,9 +21,9 @@ class BuilderCommand extends Command
     {
         $this
             ->setName('builder')
-            ->setDescription('Executes Map/Reduce procedure from Builder interface')
+            ->setDescription('Executes builder script based MapReduce definition')
             ->setDefinition(array(
-                new InputArgument('file', InputArgument::REQUIRED, 'File builds Map/Reduce with Builder interface')
+                new InputArgument('file', InputArgument::REQUIRED, 'definition file')
             ))
             ->addOption('input', 'i', InputOption::VALUE_OPTIONAL, 'URI of input table')
             ->addOption('output', 'o', InputOption::VALUE_OPTIONAL, 'URI of output table');

@@ -1,6 +1,6 @@
 <?php
 /**
- * Executes command for class based MapReduce definition.
+ * Command for class based MapReduce definition.
  *
  * @author Yuya Takeyama
  */
@@ -24,7 +24,7 @@ class ClassCommand extends Command
             ->setName('class')
             ->setDescription('Executes class based MapReduce definition')
             ->setDefinition(array(
-                new InputArgument('file', InputArgument::REQUIRED, 'File defined Map/Reduce procedure definition'),
+                new InputArgument('file', InputArgument::REQUIRED, 'definition file'),
             ))
             ->addOption('input', 'i', InputOption::VALUE_REQUIRED, 'URI of input table')
             ->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'URI of output table');
