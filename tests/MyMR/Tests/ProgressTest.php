@@ -28,11 +28,8 @@ class ProgressTest extends \PHPUnit_Framework_Testcase
         $data[] = array(
             1,
             array(1),
-            <<< __EXPECTED__
-0/1 (0%)
-1/1 (100%)
-
-__EXPECTED__
+            "0/1 (0%)" . PHP_EOL .
+            "1/1 (100%)". PHP_EOL
         );
 
         return $data;
