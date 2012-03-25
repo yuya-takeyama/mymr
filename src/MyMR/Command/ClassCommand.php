@@ -1,6 +1,6 @@
 <?php
 /**
- * execute command for MyMR.
+ * Executes command for class based MapReduce definition.
  *
  * @author Yuya Takeyama
  */
@@ -16,13 +16,13 @@ use \Symfony\Component\Console\Command\Command,
     \Symfony\Component\Console\Input\InputOption,
     \Symfony\Component\Console\Output\OutputInterface;
 
-class ExecuteCommand extends Command
+class ClassCommand extends Command
 {
     public function configure()
     {
         $this
-            ->setName('execute')
-            ->setDescription('Executes Map/Reduce procedure')
+            ->setName('class')
+            ->setDescription('Executes class based MapReduce definition')
             ->setDefinition(array(
                 new InputArgument('file', InputArgument::REQUIRED, 'File defined Map/Reduce procedure definition'),
             ))

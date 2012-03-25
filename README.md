@@ -92,7 +92,7 @@ $ mysql -u USER --database INPUT_DATABASE -p < examples/sql/wordcount_example_db
 ### Running class based example
 
 ```
-$ ./bin/mymr execute examples/WordCount.php -i USER:PASSWORD@DATABASE/INPUT_DATABASE/texts -o USER:PASSWORD@DATABASE/OUTPUT_DATABASE/word_counts
+$ ./bin/mymr class examples/WordCount.php -i USER:PASSWORD@DATABASE/INPUT_DATABASE/texts -o USER:PASSWORD@DATABASE/OUTPUT_DATABASE/word_counts
 ```
 
 ### Running builder script based example

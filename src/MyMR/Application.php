@@ -6,7 +6,7 @@
  */
 namespace MyMR;
 
-use \MyMR\Command\ExecuteCommand,
+use \MyMR\Command\ClassCommand,
     \MyMR\Command\BuilderCommand;
 
 use \Symfony\Component\Console\Application as ConsoleApplication,
@@ -22,7 +22,7 @@ class Application extends ConsoleApplication
     public function __construct($version = NULL)
     {
         parent::__construct('MyMR', $version);
-        $this->add(new ExecuteCommand);
+        $this->add(new ClassCommand);
         $this->add(new BuilderCommand);
     }
 }
