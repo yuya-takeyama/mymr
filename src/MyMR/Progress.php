@@ -34,7 +34,7 @@ class Progress
     {
         $max = $this->max;
         if ($position === 1) {
-            $this->output->writeln(sprintf('%d/%d (%d%%)', 0, $max, 0));
+            $this->output->writeln(sprintf('0/%d   (0%%)', $max));
         }
         if ($position === $max) {
             $this->output->writeln(sprintf('%d/%d (%d%%)', 1, $max, 100));
