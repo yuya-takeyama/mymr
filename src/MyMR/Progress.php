@@ -46,6 +46,13 @@ class Progress
         if ($position === $max) {
             $indicator = str_pad("{$max}/{$max}", $this->indicatorLength, ' ', STR_PAD_LEFT);
             $this->output->writeln(sprintf('%s (100%%)', $indicator, $max));
+        } else {
+            $key = floor($position / $max * 10);
+            if (empty($this->flags[$key])) {
+                $per = round($position / $max * 100);
+                $indicator = str_pad("{$position}/{$max}", $this->indicatorLength, ' ', STR_PAD_LEFT);
+                $this->output->writeln("{$indicator}  ({$per}%)");
+            }
         }
     }
 }
