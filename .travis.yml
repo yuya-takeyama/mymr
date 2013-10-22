@@ -10,7 +10,6 @@ branches:
     - develop
 
 before_script:
-  - wget http://getcomposer.org/composer.phar
-  - php composer.phar install
+  - php composer install
 
 script: phpunit --coverage-text
