@@ -10,6 +10,6 @@ branches:
     - develop
 
 before_script:
-  - php composer install
+  - composer install
 
 script: phpunit --coverage-text
