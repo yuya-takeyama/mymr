@@ -5,7 +5,7 @@ use \MyMR\Progress;
 
 use \SymfonyX\Component\Console\Output\SpyOutput;
 
-class ProgressTest extends \PHPUnit_Framework_Testcase
+class ProgressTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
